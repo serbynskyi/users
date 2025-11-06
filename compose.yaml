@@ -10,6 +10,8 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: password
       MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - mysql_data:/var/lib/mysql
     networks:
       - users-network
 
@@ -23,6 +25,10 @@ services:
       - users-network
     depends_on:
       - mysql
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      - PHP_IDE_CONFIG=serverName=host.docker.internal
 
   nginx:
     image: nginx:latest
@@ -39,3 +45,6 @@ services:
 networks:
   users-network:
     driver: bridge
+
+volumes:
+  mysql_data:

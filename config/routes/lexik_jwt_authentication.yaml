@@ -1,0 +1,3 @@
+login_check:
+    path: /v1/api/login
+    methods: [POST]

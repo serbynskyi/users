@@ -21,6 +21,9 @@ echo "✅ MySQL доступний!"
 echo "🚀 Running migrations..."
 php bin/console doctrine:migrations:migrate --no-interaction || true
 
+echo "🌱 Loading fixtures..."
+php bin/console doctrine:fixtures:load --no-interaction --append || true
+
 echo "🔥 Clearing and warming up cache..."
 php bin/console cache:clear --no-warmup || true
 
