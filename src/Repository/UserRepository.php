@@ -24,13 +24,13 @@ class UserRepository extends ServiceEntityRepository
                 ->getArrayResult();
         }
 
-    //    public function findOneBySomeField($value): ?User
-    //    {
-    //        return $this->createQueryBuilder('u')
-    //            ->andWhere('u.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+        public function findOneById($id): array
+        {
+            return $this->createQueryBuilder('u')
+                ->select('u.id, u.login, u.phone, u.roles')
+                ->andWhere('u.id = :id')
+                ->setParameter('id', $id)
+                ->getQuery()
+                ->getArrayResult();
+        }
 }

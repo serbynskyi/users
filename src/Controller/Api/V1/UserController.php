@@ -40,23 +40,19 @@ class UserController extends AbstractController
     }
 
     #[Route('/{id}', name: 'get', methods: ['GET'])]
-    #[IsGranted('ROLE_USER')]
     public function getUserById(int $id): JsonResponse
     {
-        $user = $this->em->getRepository(User::class)->find($id);
+        $currentUser = $this->getUser();
+        if (!$this->isGranted('ROLE_ADMIN') && $currentUser->getId() !== $id) {
+            return $this->json(['error' => 'Access denied'], 403);
+        }
+
+        $user = $this->userRepository->find($id);
         if (!$user) {
             return $this->json(['error' => 'User not found'], 404);
         }
 
-        $currentUser = $this->getUser();
-        if (!$this->isGranted('ROLE_ADMIN') && $currentUser->getId() !== $user->getId()) {
-            return $this->json(['error' => 'Access denied'], 403);
-        }
-
-        return $this->json([
-            'login' => $user->getLogin(),
-            'phone' => $user->getPhone(),
-        ]);
+        return $this->json($user);
     }
 
     #[Route('/{id}', name: 'update', methods: ['PUT'])]
