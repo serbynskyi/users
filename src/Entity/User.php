@@ -4,11 +4,12 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Table(name: 'user')]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User implements UserInterface, \Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -26,9 +27,6 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
 
     #[ORM\Column(type: 'json')]
     private array $roles = [];
-
-    #[ORM\Column(length: 64, nullable: true)]
-    private ?string $apiToken = null;
 
     public function getId(): ?int
     {
@@ -73,9 +71,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
 
     public function getRoles(): array
     {
-        $roles = $this->roles;
-        $roles[] = 'ROLE_USER';
-        return array_unique($roles);
+        return $this->roles;
     }
 
     public function setRoles(array $roles): static
@@ -92,17 +88,5 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
     public function getUserIdentifier(): string
     {
         return (string) $this->login;
-    }
-
-    public function generateApiToken(): string
-    {
-        $token = bin2hex(random_bytes(32));
-        $this->apiToken = $token;
-        return $token;
-    }
-
-    public function getApiToken(): ?string
-    {
-        return $this->apiToken;
     }
 }
