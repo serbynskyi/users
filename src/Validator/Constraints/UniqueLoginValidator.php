@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Validator;
+namespace App\Validator\Constraints;
 
+use App\Repository\UserRepository;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
-use App\Repository\UserRepository;
 
 class UniqueLoginValidator extends ConstraintValidator
 {

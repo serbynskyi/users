@@ -56,14 +56,4 @@ class UserService
         $this->em->remove($user);
         $this->em->flush();
     }
-
-    public function findAll(): array
-    {
-        return $this->em->getRepository(User::class)->findAll();
-    }
-
-    public function find(int $id): ?User
-    {
-        return $this->em->getRepository(User::class)->find($id);
-    }
 }

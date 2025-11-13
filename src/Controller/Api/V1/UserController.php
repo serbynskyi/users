@@ -28,7 +28,7 @@ class UserController extends AbstractController
     #[IsGranted('ROLE_ADMIN')]
     public function list(): JsonResponse
     {
-        return $this->json($this->userRepository->findUsers());
+        return $this->json($this->userRepository->findAll());
     }
 
     #[Route('', name: 'create', methods: ['POST'])]

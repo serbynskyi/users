@@ -2,7 +2,7 @@
 
 namespace App\Dto;
 
-use App\Validator\UniqueLogin;
+use App\Validator\Constraints\UniqueLogin;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class UserCreateDto
