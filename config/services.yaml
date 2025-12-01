@@ -21,3 +21,12 @@ services:
     App\EventListener\ApiExceptionListener:
         tags:
             - { name: kernel.event_listener, event: kernel.exception }
+
+    App\Security\Resolver\UserExistsResolver:
+        tags:
+            - { name: controller.argument_value_resolver, priority: 300 }
+    App\Security\Resolver\UserIsSelfOrAdminResolver:
+        arguments:
+            $security: '@security.helper'
+        tags:
+            - { name: controller.argument_value_resolver, priority: 200 }

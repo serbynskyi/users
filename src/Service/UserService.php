@@ -15,6 +15,11 @@ class UserService
         private UserPasswordHasherInterface $passwordHasher
     ) {}
 
+    public function getUser(int $id): User
+    {
+        return $this->em->getRepository(User::class)->find($id);
+    }
+
     public function createUser(UserCreateDto $dto): User
     {
         $user = new User();
@@ -31,8 +36,10 @@ class UserService
         return $user;
     }
 
-    public function updateUser(User $user, UserUpdateDto $dto): User
+    public function updateUser(int $id, UserUpdateDto $dto): User
     {
+        $user = $this->em->getRepository(User::class)->find($id);
+
         if ($dto->login) {
             $user->setLogin($dto->login);
         }
@@ -48,11 +55,13 @@ class UserService
         }
 
         $this->em->flush();
+
         return $user;
     }
 
-    public function deleteUser(User $user): void
+    public function deleteUser(int $id): void
     {
+        $user = $this->em->getRepository(User::class)->find($id);
         $this->em->remove($user);
         $this->em->flush();
     }

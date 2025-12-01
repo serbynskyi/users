@@ -2,14 +2,19 @@
 
 namespace App\Dto;
 
-use App\Validator\Constraints\UniqueLogin;
+use App\Entity\User;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
+#[UniqueEntity(
+    fields: ['login'],
+    message: 'This login is already used.',
+    entityClass: User::class
+)]
 class UserCreateDto
 {
     #[Assert\NotBlank]
     #[Assert\Length(min: 3, max: 255)]
-    #[UniqueLogin]
     public string $login;
 
     #[Assert\NotBlank]
