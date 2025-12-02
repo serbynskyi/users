@@ -2,8 +2,10 @@
 
 namespace App\Dto;
 
+use App\Validator\UniqueLoginIfChanged;
 use Symfony\Component\Validator\Constraints as Assert;
 
+#[UniqueLoginIfChanged]
 class UserUpdateDto
 {
     #[Assert\Length(min: 3, max: 255)]

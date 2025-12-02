@@ -30,3 +30,7 @@ services:
             $security: '@security.helper'
         tags:
             - { name: controller.argument_value_resolver, priority: 200 }
+
+    App\Validator\UniqueLoginIfChangedValidator:
+        tags:
+            - { name: validator.constraint_validator }
