@@ -1,4 +1,4 @@
-# API:users
+# API: users
 
 ## Installation
 
@@ -21,7 +21,7 @@ Preinstalled admin user:
 
 The API supports authentication via tokens. To get a token:
 
-1. Make POST request to `/api/login` :
+1. Make POST request to `v1/api/login` :
     ```json
     {
       "username": "your_login",
@@ -31,3 +31,23 @@ The API supports authentication via tokens. To get a token:
 
 2. In the response, you will receive a token that must be added to the `Authorization` header to access secure routes.
 
+
+# Available Endpoints
+
+### GET /v1/api/users/{id}
+Returns user by ID.
+Requires authorization.
+
+### POST /v1/api/users
+Creates a new user.
+Requires admin authorization.
+
+### PUT /v1/api/users/{id}
+Updates an existing user.
+Allowed for:
+- Admin  
+- The user themselves
+
+### DELETE /v1/api/users/{id}
+Deletes a user.
+Requires admin authorization.
